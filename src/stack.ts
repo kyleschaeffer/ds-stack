@@ -40,7 +40,7 @@ export class Stack<T> {
   }
 
   /**
-   * Push an item to the stack
+   * Push item(s) to the stack
    */
   public push(...items: T[]): void {
     items.forEach(item => {
@@ -57,7 +57,7 @@ export class Stack<T> {
     if (!this.length) throw new Error('Stack is empty');
 
     // Pop off the stack
-    const popped = this.stack[this.length - 1];
+    const popped: T = this.stack[this.length - 1];
     delete this.stack[this.length - 1];
     this.length--;
 
