@@ -6,45 +6,65 @@ export class Stack<T> {
   /**
    * A stack of items
    */
-  private stack: T[];
+  private stack: IStack<T>;
+
+  /**
+   * Current stack size
+   */
+  private length: number;
 
   /**
    * Create a new stack
    */
-  constructor() {
+  constructor(...items: T[]) {
     // New empty stack
-    this.stack = [];
+    this.stack = {};
+    this.length = 0;
+
+    // Push items to stack
+    this.push(...items);
   }
 
   /**
    * Get stack size
    */
-  public get length(): number {
-    return this.stack.length;
+  public get size(): number {
+    return this.length;
   }
 
   /**
    * Get items in the stack
    */
   public get items(): T[] {
-    return this.stack;
+    return Object.values(this.stack);
   }
 
   /**
-   * Add an item to the stack
+   * Push an item to the stack
    */
-  public add(item: T): void {
-    this.stack.push(item);
+  public push(...items: T[]): void {
+    items.forEach(item => {
+      this.stack[this.length] = item;
+      this.length++;
+    });
   }
 
   /**
-   * Remove item from the top of the stack
+   * Pop an item from the top of the stack
    */
-  public remove(): T {
+  public pop(): T {
     // Stack is empty
     if (!this.length) throw new Error('Stack is empty');
 
     // Pop off the stack
-    return this.stack.pop();
+    const popped = this.stack[this.length - 1];
+    delete this.stack[this.length - 1];
+    this.length--;
+
+    return popped;
   }
+}
+
+export interface IStack<T> {
+  [index: number]: T;
 }

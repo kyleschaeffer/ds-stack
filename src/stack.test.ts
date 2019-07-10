@@ -1,37 +1,29 @@
 import { Stack } from './stack';
 
 test('new stack is instantiated', () => {
-  const s = new Stack<number>();
-  expect(s.items).toEqual([]);
+  const s = new Stack<number>(1, 2, 3);
+  expect(s.items).toEqual([1, 2, 3]);
 });
 
-test('item added to stack', () => {
-  const s = new Stack<string>();
-  s.add('one');
-  s.add('two');
-  expect(s.items).toEqual(['one', 'two']);
+test('items are pushed to stack', () => {
+  const s = new Stack<string>('one', 'two');
+  s.push('three');
+  expect(s.items).toEqual(['one', 'two', 'three']);
 });
 
 test('item removed from stack', () => {
-  const s = new Stack<string>();
-  s.add('one');
-  s.add('two');
-  s.add('three');
-  const popped = s.remove();
+  const s = new Stack<string>('one', 'two', 'three');
+  const popped = s.pop();
   expect(popped).toBe('three');
   expect(s.items).toEqual(['one', 'two']);
 });
 
-test('stack has length', () => {
-  const s = new Stack<string>();
-  s.add('one');
-  s.add('two');
-  expect(s.length).toBe(2);
+test('stack has size', () => {
+  const s = new Stack<string>('one', 'two');
+  expect(s.size).toBe(2);
 });
 
 test('error on removing from empty stack', () => {
   const s = new Stack<string>();
-  s.add('one');
-  s.remove();
-  expect(() => s.remove()).toThrowError();
+  expect(() => s.pop()).toThrowError();
 });
